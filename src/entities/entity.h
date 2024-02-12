@@ -13,12 +13,12 @@ private:
 
     Entity();
     Entity(const std::string& tag, const size_t& id);
-    ~Entity();
-
-    void kill();
 public:
+    ~Entity();
     const std::string& tag();
+    void kill();
     friend class EntityManager;
+    friend class EntityManagerTwo;
 };
 
 }

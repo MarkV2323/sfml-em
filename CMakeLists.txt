@@ -10,6 +10,7 @@ set(SFML_PATH C:\\Users\\Mark\\Desktop\\cpp-apps\\lib\\SFML-2.6.1)
 set (HEADERS 
     src/entities/entity.h
     src/entityManager/entityManager.h
+    src/entityManagerTwo/entityManagerTwo.h
 )
 
 # Set Sources
@@ -18,6 +19,7 @@ set(SOURCES
     src/main.cc
     src/entities/entity.cc
     src/entityManager/entityManager.cc
+    src/entityManagerTwo/entityManagerTwo.cc
 )
 
 # Build Main Executable (Our Target)

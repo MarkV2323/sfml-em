@@ -2,15 +2,22 @@
 #include <iostream>
 
 #include "entityManager/entityManager.h"
+#include "entityManagerTwo/entityManagerTwo.h"
 
 using namespace em;
+using namespace std;
 
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode(600, 600), "Entity Manager Demo");
-    window.setFramerateLimit(60);
+inline void debugPrint(EntityManager& eMan) {
+    cout << "\n";
+    cout << "Total Waiting Entities: " << eMan.getTotalWaitingEntities() << "\n";
+    cout << "Total Alive Entities: " << eMan.getTotalAliveEntities() << "\n";
+    cout << "Total Created Entities: " << eMan.getTotalCreatedEntities() << "\n";
+    cout << "\n";
+    eMan.update();
+}
 
-    // Setup our E.M
+inline void demoEntityManager() {
+    // Example of using our orginal, raw pointer Entity Manager
     EntityManager* eMan = new EntityManager();
     
     auto e0 = eMan->addEntity("E-0");
@@ -20,21 +27,70 @@ int main()
     auto e4 = eMan->addEntity("E-0");
     auto e5 = eMan->addEntity("E-0");
 
-    std::cout << "Total Waiting Entities: " << eMan->getTotalWaitingEntities() << "\n";
-    std::cout << "Total Alive Entities: " << eMan->getTotalAliveEntities() << "\n";
-    std::cout << "Total Created Entities: " << eMan->getTotalCreatedEntities() << "\n";
+    cout << "Total Waiting Entities: " << eMan->getTotalWaitingEntities() << "\n";
+    cout << "Total Alive Entities: " << eMan->getTotalAliveEntities() << "\n";
+    cout << "Total Created Entities: " << eMan->getTotalCreatedEntities() << "\n";
     eMan->update();
-    std::cout << "\n";
+    cout << "\n";
 
-    std::cout << "Total Waiting Entities: " << eMan->getTotalWaitingEntities() << "\n";
-    std::cout << "Total Alive Entities: " << eMan->getTotalAliveEntities() << "\n";
-    std::cout << "Total Created Entities: " << eMan->getTotalCreatedEntities() << "\n";
-    std::cout << "\n";
+    cout << "Total Waiting Entities: " << eMan->getTotalWaitingEntities() << "\n";
+    cout << "Total Alive Entities: " << eMan->getTotalAliveEntities() << "\n";
+    cout << "Total Created Entities: " << eMan->getTotalCreatedEntities() << "\n";
+    cout << "\n";
 
     eMan->removeEntity(*e3); // 3,[E-0]2
     eMan->removeEntity(*e5); // 5,[E-0]4
     eMan->update();
-    
+    delete eMan;
+}
+
+inline void debugPrint(EntityManagerTwo& eMan) {
+    cout << "\n";
+    cout << "Total Waiting Entities: " << eMan.getTotalWaitingEntities() << "\n";
+    cout << "Total Alive Entities: " << eMan.getTotalAliveEntities() << "\n";
+    cout << "Total Created Entities: " << eMan.getTotalCreatedEntities() << "\n";
+    cout << "\n";
+    eMan.update();
+}
+
+inline void demoEntityMangerTwo() {
+    // Eaxmple of using our unique_ptr Entity Manager
+    auto eMan = EntityManagerTwo();
+    eMan.addEntity("E-0");
+    eMan.addEntity("E-0");
+    eMan.addEntity("E-1");
+    eMan.addEntity("E-2");
+    eMan.addEntity("E-2");
+    eMan.addEntity("E-0");
+    debugPrint(eMan);
+    debugPrint(eMan);
+
+    cout << "Killing an E-0" << endl;
+    eMan.getEntities().at(1).get()->kill(); // kill a E-0
+    eMan.update();
+    debugPrint(eMan);
+
+    cout << "Killing an E-2" << endl;
+    eMan.getEntities("E-2").at(1).get()->kill(); // kill a E-2
+    eMan.update();
+    debugPrint(eMan);
+
+    auto eMap = eMan.getEntityMap();
+    for (auto& e : eMap) {
+        cout << "eMap Vector Tag & Size: " << e.first << "," << e.second.size() << std::endl;
+    }
+
+    cout << "Adding an E-0" << endl;
+    eMan.addEntity("E-0");
+    eMan.update();
+    debugPrint(eMan);
+}
+
+int main()
+{
+    sf::RenderWindow window(sf::VideoMode(600, 600), "Entity Manager Demo");
+    window.setFramerateLimit(60);
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -50,6 +106,5 @@ int main()
         window.display();
     }
 
-    delete eMan;
     return 0;
 }
