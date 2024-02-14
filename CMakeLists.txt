@@ -11,6 +11,7 @@ set (HEADERS
     src/entities/entity.h
     src/entityManager/entityManager.h
     src/entityManagerTwo/entityManagerTwo.h
+    src/tests/emTwoTests.h
 )
 
 # Set Sources

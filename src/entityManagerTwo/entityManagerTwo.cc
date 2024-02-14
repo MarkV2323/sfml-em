@@ -9,12 +9,12 @@ EntityManagerTwo::~EntityManagerTwo() {
     // to private data attributes going out of scope.
 }
 
-S_entity EntityManagerTwo::addEntity(const std::string & tag) {
+Entity* EntityManagerTwo::addEntity(const std::string & tag) {
     // Have to use a special case of make_shared, should be exception safe due
     // to only passing a single arguement. Has to deal with private Entity
     // constructor.
     m_toAddEntites.push_back(S_entity(new Entity(tag, m_totalEntities++)));
-    return m_toAddEntites.back();
+    return m_toAddEntites.back().get();
 }
 
 EntityVecTwo& EntityManagerTwo::getEntities() {
@@ -38,6 +38,8 @@ void EntityManagerTwo::update() {
     m_toAddEntites.clear();
     
     // Remove
+    // See https://en.wikipedia.org/wiki/Erase%E2%80%93remove_idiom#Example
+    // and https://stackoverflow.com/questions/7627098/what-is-a-lambda-expression-and-when-should-i-use-one
     m_entities.erase(std::remove_if(m_entities.begin(), m_entities.end(),
     [](S_entity entity) {
         return !entity.get()->m_alive;

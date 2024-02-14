@@ -27,7 +27,7 @@ public:
     EntityManagerTwo();
     ~EntityManagerTwo();
 
-    S_entity addEntity(const std::string& tag);
+    Entity* addEntity(const std::string& tag);
     EntityVecTwo& getEntities();
     EntityVecTwo& getEntities(const std::string& tag);
     EntityMapTwo& getEntityMap();
