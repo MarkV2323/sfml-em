@@ -12,6 +12,9 @@ set (HEADERS
     src/entityManager/entityManager.h
     src/entityManagerTwo/entityManagerTwo.h
     src/tests/emTwoTests.h
+    src/components/boundingBox.h
+    src/components/shape.h
+    src/components/transform.h
 )
 
 # Set Sources
@@ -21,6 +24,9 @@ set(SOURCES
     src/entities/entity.cc
     src/entityManager/entityManager.cc
     src/entityManagerTwo/entityManagerTwo.cc
+    src/components/boundingBox.cc
+    src/components/shape.cc
+    src/components/transform.cc
 )
 
 # Build Main Executable (Our Target)

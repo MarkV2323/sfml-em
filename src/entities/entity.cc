@@ -20,4 +20,12 @@ void Entity::kill() {
     m_alive = false;
 }
 
+ecs::Shape& Entity::getShape() {
+    return m_shape;
+}
+
+ecs::Transform& Entity::getTransform() {
+    return m_transform;
+}
+
 }

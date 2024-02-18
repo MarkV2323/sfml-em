@@ -7,6 +7,7 @@
 
 using namespace em;
 using namespace std;
+using namespace ecs;
 
 int main()
 {
@@ -14,10 +15,11 @@ int main()
     window.setFramerateLimit(60);
 
     // run EM-Two tests
-    runEntityManagerTwoTests();
+    // runEntityManagerTwoTests();
 
-    // TODO:
-    // 2 - Add removal function based on unique ID for entities.
+    EntityManagerTwo em{};
+    auto e1 = em.addEntity("TEST");
+    em.update();
 
     while (window.isOpen())
     {
@@ -30,7 +32,20 @@ int main()
                 window.close();
         }
 
+        // Transform System
+        for (auto& e : em.getEntities()) {
+            auto p = e.get()->getTransform().getPosition();
+            auto v = e.get()->getTransform().getVelocity();
+            auto n_pos = p + v;
+            e.get()->getTransform().setPosition(n_pos);
+            e.get()->getShape().setPosition(n_pos);
+        }
+
         window.clear();
+        // Render System
+        for (auto& e : em.getEntities()) {
+            window.draw(e.get()->getShape().getCircle());
+        }
         window.display();
     }
 
