@@ -17,14 +17,7 @@ int main()
     runEntityManagerTwoTests();
 
     // TODO:
-    // 1 - Refactor EntityManagerTwo addEntity to return a raw pointer
-    //     rather than shared pointer.
     // 2 - Add removal function based on unique ID for entities.
-    // 3 - Add getId function for entities.
-    // 2 - Create test header file with static function for running
-    //     several assert tests against entityManagerTwo
-    //     These test should contain creation and removal of entities.
-    //     Adding some randomness and timing meterics.
 
     while (window.isOpen())
     {

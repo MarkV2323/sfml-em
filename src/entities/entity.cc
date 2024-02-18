@@ -12,6 +12,10 @@ const std::string & Entity::tag() {
     return m_tag;
 }
 
+const size_t & Entity::id() {
+    return m_id;
+}
+
 void Entity::kill() {
     m_alive = false;
 }
