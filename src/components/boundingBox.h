@@ -14,7 +14,7 @@ public:
     BoundingBox(float w, float h);
     ~BoundingBox();
     
-    sf::Vector2f& getBoundingBox();
+    sf::Vector2f& getBoundingBoxDimension();
     bool setBoundingBox(sf::Vector2f& bb);
 };
 

@@ -20,12 +20,29 @@ void Entity::kill() {
     m_alive = false;
 }
 
-ecs::Shape& Entity::getShape() {
-    return m_shape;
+const sf::CircleShape & Entity::getCircleShape() {
+    return m_shape.getCircle();
 }
 
-ecs::Transform& Entity::getTransform() {
-    return m_transform;
+sf::Vector2f & Entity::getPos() {
+    return m_transform.getPosition();
+}
+
+sf::Vector2f & Entity::getVel() {
+    return m_transform.getVelocity();
+}
+
+void Entity::setPos(sf::Vector2f & p) {
+    m_transform.setPosition(p);
+    m_shape.setPosition(p);
+}
+
+void Entity::setVel(sf::Vector2f & v) {
+    m_transform.setVelocity(v);
+}
+
+sf::Vector2f & Entity::getBounds() {
+    return m_bb.getBoundingBoxDimension();
 }
 
 }

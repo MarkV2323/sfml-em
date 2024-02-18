@@ -19,7 +19,6 @@ int main()
 
     EntityManagerTwo em{};
     auto e1 = em.addEntity("TEST");
-    em.update();
 
     while (window.isOpen())
     {
@@ -32,19 +31,32 @@ int main()
                 window.close();
         }
 
+        // Update new entities
+        em.update();
+
         // Transform System
         for (auto& e : em.getEntities()) {
-            auto p = e.get()->getTransform().getPosition();
-            auto v = e.get()->getTransform().getVelocity();
-            auto n_pos = p + v;
-            e.get()->getTransform().setPosition(n_pos);
-            e.get()->getShape().setPosition(n_pos);
+            e.get()->setPos(e.get()->getPos() + e.get()->getVel());
         }
 
-        window.clear();
-        // Render System
+        // Bounding Box System
         for (auto& e : em.getEntities()) {
-            window.draw(e.get()->getShape().getCircle());
+            auto p = e.get()->getPos();
+            auto bb = e.get()->getBounds();
+            if (p.x <= 0 || p.x + bb.x >= 600) {
+                auto v = e.get()->getVel();
+                e.get()->setVel(sf::Vector2f(v.x * -1, v.y));
+            }
+            if (p.y <= 0 || p.y + bb.y >= 600) {
+                auto v = e.get()->getVel();
+                e.get()->setVel(sf::Vector2f(sf::Vector2f(v.x, v.y * -1)));
+            }
+        }
+
+        // Render System
+        window.clear();
+        for (auto& e : em.getEntities()) {
+            window.draw(e.get()->getCircleShape());
         }
         window.display();
     }

@@ -7,7 +7,7 @@ namespace ecs {
 
     BoundingBox::~BoundingBox() {}
 
-    sf::Vector2f& BoundingBox::getBoundingBox() {
+    sf::Vector2f& BoundingBox::getBoundingBoxDimension() {
         return boundingBox;
     }
 
